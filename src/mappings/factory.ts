@@ -1,4 +1,4 @@
-import { WHITELIST_TOKENS } from './../utils/pricing'
+import { WHITELIST_TOKENS } from './../utils/constants'
 /* eslint-disable prefer-const */
 import { FACTORY_ADDRESS, ZERO_BI, ONE_BI, ZERO_BD, ADDRESS_ZERO } from './../utils/constants'
 import { Factory } from '../types/schema'
