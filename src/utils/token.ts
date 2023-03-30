@@ -2,8 +2,7 @@
 import { ERC20 } from '../types/Factory/ERC20'
 import { ERC20SymbolBytes } from '../types/Factory/ERC20SymbolBytes'
 import { ERC20NameBytes } from '../types/Factory/ERC20NameBytes'
-import { StaticTokenDefinition } from './staticTokenDefinition'
-import { BigInt, Address } from '@graphprotocol/graph-ts'
+import { BigInt, Address, log } from '@graphprotocol/graph-ts'
 import { isNullEthValue } from '.'
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
@@ -19,15 +18,13 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
       // for broken pairs that have no symbol function exposed
       if (!isNullEthValue(symbolResultBytes.value.toHexString())) {
         symbolValue = symbolResultBytes.value.toString()
-      } else {
-        // try with the static definition
-        let staticTokenDefinition = StaticTokenDefinition.fromAddress(tokenAddress)
-        if(staticTokenDefinition != null) {
-          symbolValue = staticTokenDefinition.symbol
-        }
       }
+    } else {
+      log.warning('call contractSymbolBytes.try_symbol reverted ', [])
     }
   } else {
+    log.warning('call contract.try_symbol reverted ', [])
+    
     symbolValue = symbolResult.value
   }
 
@@ -47,15 +44,13 @@ export function fetchTokenName(tokenAddress: Address): string {
       // for broken exchanges that have no name function exposed
       if (!isNullEthValue(nameResultBytes.value.toHexString())) {
         nameValue = nameResultBytes.value.toString()
-      } else {
-        // try with the static definition
-        let staticTokenDefinition = StaticTokenDefinition.fromAddress(tokenAddress)
-        if(staticTokenDefinition != null) {
-          nameValue = staticTokenDefinition.name
-        }
       }
+    } else {
+      log.warning('call contractNameBytes.try_name reverted ', [])
     }
   } else {
+    log.warning('call contract.try_name reverted ', [])
+
     nameValue = nameResult.value
   }
 
@@ -68,6 +63,8 @@ export function fetchTokenTotalSupply(tokenAddress: Address): BigInt {
   let totalSupplyResult = contract.try_totalSupply()
   if (!totalSupplyResult.reverted) {
     totalSupplyValue = totalSupplyResult as i32
+  } else {
+    log.warning('call contract.try_totalSupply reverted ', [])
   }
   return BigInt.fromI32(totalSupplyValue as i32)
 }
@@ -80,11 +77,7 @@ export function fetchTokenDecimals(tokenAddress: Address): BigInt {
   if (!decimalResult.reverted) {
     decimalValue = decimalResult.value
   } else {
-    // try with the static definition
-    let staticTokenDefinition = StaticTokenDefinition.fromAddress(tokenAddress)
-    if(staticTokenDefinition != null) {
-      return staticTokenDefinition.decimals
-    }
+    log.warning('call contract.try_decimals reverted ', [])
   }
 
   return BigInt.fromI32(decimalValue as i32)
