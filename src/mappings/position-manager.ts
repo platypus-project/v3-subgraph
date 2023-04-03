@@ -6,9 +6,9 @@ import {
   NonfungiblePositionManager,
   Transfer
 } from '../types/NonfungiblePositionManager/NonfungiblePositionManager'
-import { Bundle, Position, PositionSnapshot, Token } from '../types/schema'
+import { Position, PositionSnapshot, Token } from '../types/schema'
 import { ADDRESS_ZERO, factoryContract, ZERO_BD, ZERO_BI } from '../utils/constants'
-import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts'
+import { Address, BigInt, ethereum, log } from '@graphprotocol/graph-ts'
 import { convertTokenToDecimal, loadTransaction } from '../utils'
 
 function getPosition(event: ethereum.Event, tokenId: BigInt): Position | null {
@@ -43,6 +43,8 @@ function getPosition(event: ethereum.Event, tokenId: BigInt): Position | null {
       position.transaction = loadTransaction(event).id
       position.feeGrowthInside0LastX128 = positionResult.value8
       position.feeGrowthInside1LastX128 = positionResult.value9
+    } else {
+      log.warning('call try_positions reverted with args: {}', [tokenId.toString()])
     }
   }
 
@@ -55,6 +57,8 @@ function updateFeeVars(position: Position, event: ethereum.Event, tokenId: BigIn
   if (!positionResult.reverted) {
     position.feeGrowthInside0LastX128 = positionResult.value.value8
     position.feeGrowthInside1LastX128 = positionResult.value.value9
+  } else {
+    log.warning('call try_positions reverted with args: {}', [tokenId.toString()])
   }
   return position
 }
@@ -80,20 +84,10 @@ function savePositionSnapshot(position: Position, event: ethereum.Event): void {
 }
 
 export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
-  // temp fix
-  if (event.block.number.equals(BigInt.fromI32(14317993))) {
-    return
-  }
-
   let position = getPosition(event, event.params.tokenId)
 
   // position was not able to be fetched
   if (position == null) {
-    return
-  }
-
-  // temp fix
-  if (Address.fromString(position.pool).equals(Address.fromHexString('0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248'))) {
     return
   }
 
@@ -115,20 +109,10 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
 }
 
 export function handleDecreaseLiquidity(event: DecreaseLiquidity): void {
-  // temp fix
-  if (event.block.number == BigInt.fromI32(14317993)) {
-    return
-  }
-
   let position = getPosition(event, event.params.tokenId)
 
   // position was not able to be fetched
   if (position == null) {
-    return
-  }
-
-  // temp fix
-  if (Address.fromString(position.pool).equals(Address.fromHexString('0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248'))) {
     return
   }
 
@@ -150,9 +134,6 @@ export function handleCollect(event: Collect): void {
   let position = getPosition(event, event.params.tokenId)
   // position was not able to be fetched
   if (position == null) {
-    return
-  }
-  if (Address.fromString(position.pool).equals(Address.fromHexString('0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248'))) {
     return
   }
 
