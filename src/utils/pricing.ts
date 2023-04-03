@@ -1,5 +1,15 @@
 /* eslint-disable prefer-const */
-import { MINIMUM_ETH_LOCKED, ONE_BD, Q192, STABLE_COINS, USDC_WETH_03_POOL, WETH_ADDRESS, WHITELIST_TOKENS, ZERO_BD, ZERO_BI } from './constants'
+import {
+  MINIMUM_ETH_LOCKED,
+  ONE_BD,
+  Q192,
+  STABLE_COINS,
+  USDC_WETH_03_POOL,
+  WETH_ADDRESS,
+  WHITELIST_TOKENS,
+  ZERO_BD,
+  ZERO_BI
+} from './constants'
 import { Bundle, Pool, Token } from './../types/schema'
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { exponentToBigDecimal, safeDiv } from '../utils/index'

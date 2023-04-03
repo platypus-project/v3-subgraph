@@ -13,12 +13,7 @@ export let BI_18 = BigInt.fromI32(18)
 
 export let factoryContract = FactoryContract.bind(Address.fromString(FACTORY_ADDRESS))
 
-// pricing.ts start
-
-export let STABLE_COINS: string[] = [
-    ''
-  ]
-
+export let STABLE_COINS: string[] = ['']
 
 export const WETH_ADDRESS = ''
 export const USDC_WETH_03_POOL = ''
@@ -31,6 +26,3 @@ export let WHITELIST_TOKENS: string[] = [
 
 export let MINIMUM_ETH_LOCKED = BigDecimal.fromString('60')
 export let Q192 = 2 ** 192
-
-// pricing.ts finished
-

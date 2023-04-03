@@ -9,7 +9,13 @@
     "compile": "graph codegen --output-dir src/types/ && graph build",
     "create": "graph create uniswapv3 --node $GRAPH_NODE_ENDPOINT",
     "deploy": "graph deploy uniswapv3 --debug --ipfs $IPFS_ENDPOINT --node $GRAPH_NODE_ENDPOINT --version-label $GRAPH_VERSION",
-    "remove": "graph remove uniswapv3 --node $GRAPH_NODE_ENDPOINT"
+    "remove": "graph remove uniswapv3 --node $GRAPH_NODE_ENDPOINT",
+
+    "install": "npx husky install",
+    "lint-fix": "npm run lint-ts-fix && npm run lint-ql-fix && npm run lint-yaml-fix",
+    "lint-yaml-fix": "prettier --write \"./**/*.yaml\"",
+    "lint-ql-fix": "prettier --write \"./**/*.graphql\"",
+    "lint-ts-fix": "prettier --write \"./**/*.ts\""
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.20.0",
@@ -20,6 +26,7 @@
     "eslint-config-prettier": "^6.1.0",
     "prettier": "^1.18.2",
     "typescript": "^3.5.2",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "husky": "^7.0.2"
   }
 }

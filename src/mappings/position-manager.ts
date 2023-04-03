@@ -84,7 +84,6 @@ function savePositionSnapshot(position: Position, event: ethereum.Event): void {
 }
 
 export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
-  
   let position = getPosition(event, event.params.tokenId)
 
   // position was not able to be fetched
@@ -110,7 +109,6 @@ export function handleIncreaseLiquidity(event: IncreaseLiquidity): void {
 }
 
 export function handleDecreaseLiquidity(event: DecreaseLiquidity): void {
-  
   let position = getPosition(event, event.params.tokenId)
 
   // position was not able to be fetched

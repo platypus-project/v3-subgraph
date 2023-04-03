@@ -9,7 +9,6 @@ import { fetchTokenSymbol, fetchTokenName, fetchTokenTotalSupply, fetchTokenDeci
 import { log, BigInt } from '@graphprotocol/graph-ts'
 
 export function handlePoolCreated(event: PoolCreated): void {
-
   // load factory
   let factory = Factory.load(FACTORY_ADDRESS)
   if (factory === null) {

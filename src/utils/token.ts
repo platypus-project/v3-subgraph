@@ -24,7 +24,7 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
     }
   } else {
     log.warning('call contract.try_symbol reverted ', [])
-    
+
     symbolValue = symbolResult.value
   }
 
