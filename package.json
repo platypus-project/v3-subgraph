@@ -7,9 +7,9 @@
     "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
     "compile": "graph codegen --output-dir src/types/ && graph build",
-    "create-local": "graph create uniswap-v3 --node http://127.0.0.1:8020",
-    "deploy-local": "graph deploy uniswap-v3 --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020",
-    "remove-local": "graph remove uniswap-v3 --node http://localhost:8020/"
+    "create": "graph create uniswapv3 --node $GRAPH_NODE_ENDPOINT",
+    "deploy": "graph deploy uniswapv3 --debug --ipfs $IPFS_ENDPOINT --node $GRAPH_NODE_ENDPOINT --version-label $GRAPH_VERSION",
+    "remove": "graph remove uniswapv3 --node $GRAPH_NODE_ENDPOINT"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.20.0",
@@ -19,6 +19,7 @@
     "eslint": "^6.2.2",
     "eslint-config-prettier": "^6.1.0",
     "prettier": "^1.18.2",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.2",
+    "dotenv": "^16.0.3"
   }
 }
