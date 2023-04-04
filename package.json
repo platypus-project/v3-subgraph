@@ -10,7 +10,6 @@
     "create": "graph create uniswapv3 --node $GRAPH_NODE_ENDPOINT",
     "deploy": "graph deploy uniswapv3 --debug --ipfs $IPFS_ENDPOINT --node $GRAPH_NODE_ENDPOINT --version-label $GRAPH_VERSION",
     "remove": "graph remove uniswapv3 --node $GRAPH_NODE_ENDPOINT",
-
     "install": "npx husky install",
     "lint-fix": "npm run lint-ts-fix && npm run lint-ql-fix && npm run lint-yaml-fix",
     "lint-yaml-fix": "prettier --write \"./**/*.yaml\"",
